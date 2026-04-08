@@ -5,7 +5,7 @@ import { Lock, Mail, ArrowRight, EyeOff, Eye } from "lucide-react";
 import { useLogin } from "@/hooks/auth/useLogin";
 import { toast } from "sonner";
 
-function Login() {
+function Login({forgotPassword}:{forgotPassword: ()=> void}) {
 
     const [data, setData] = useState({
         email: "",
@@ -50,9 +50,9 @@ function Login() {
                         <label className="text-sm font-semibold text-slate-700" htmlFor="password">
                             Password
                         </label>
-                        <Link href="/forgot" className="text-xs font-bold text-blue-600 hover:text-blue-700">
+                        <div  onClick={forgotPassword} className="text-xs font-bold text-blue-600 hover:text-blue-700 cursor-pointer">
                             Forgot?
-                        </Link>
+                        </div>
                     </div>
                     <div className="relative group">
                         {/* Left Icon (Lock) */}

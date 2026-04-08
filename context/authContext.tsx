@@ -6,26 +6,26 @@ import { useRouter } from "next/navigation";
 export type UserRole = 'admin' | 'warden' | 'student';
 
 export interface User {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   role: UserRole;
   gender: 'male' | 'female' | 'other';
   hostelBlock?: string;
   roomNumber?: string;
-  bedNumber?: string;   
+  bedNumber?: string;
   phoneNumber: string;
   emergencyContact?: {
     name: string;
     relationship: string;
     phone: string;
   };
-  registrationNumber?: string; 
-  department?: string;         
+  registrationNumber?: string;
+  department?: string;
   academicYear?: string;
   isProfileComplete: boolean;
-  createdAt: string;         
-  updatedAt: string;         
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface AuthContextType {
@@ -71,8 +71,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const logout = async () => {
-        setUser(null);
-        router.push("/");
+    setUser(null);
+    router.push("/");
   };
 
   return (

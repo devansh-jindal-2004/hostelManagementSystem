@@ -44,7 +44,7 @@ export async function POST(req: Request) {
 
         // 5. Create Response
         const userObj = user.toObject();
-        const { password: _, ...safeUser } = userObj;
+        const { password: _, otp: __, otpExpiry: ___, ...safeUser } = userObj;
 
         return NextResponse.json(
             {

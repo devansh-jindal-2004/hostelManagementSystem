@@ -36,6 +36,15 @@ const userSchema = new mongoose.Schema({
     required: true 
   },
 
+  otp: {
+    type: String,
+    select: false
+  },
+  otpExpiry: {
+    type: Date,
+    select: false
+  },
+
   // --- Hostel Logistics ---
   hostelBlock: { type: String, trim: true },
   roomNumber: { type: String, trim: true },

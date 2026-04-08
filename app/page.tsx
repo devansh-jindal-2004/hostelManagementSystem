@@ -2,8 +2,15 @@
 
 import { Building2 } from "lucide-react";
 import Login from "@/components/auth/Login";
+import { useState } from "react";
+import OTP from "@/components/auth/OTP";
+import ForgotEmail from "@/components/auth/ForgotEmail";
+import ResetPassword from "@/components/auth/ResetPassword";
 
 export default function Home() {
+
+  const [mode, setMode] = useState<"login" | "otp" | "reset" | "forgot">("reset")
+  const [email, setEmail] = useState("")
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#f8fafc] p-6 font-sans text-slate-900">
@@ -22,7 +29,15 @@ export default function Home() {
           </h1>
           <p className="text-slate-500 mt-2 font-medium">Please sign in to your account</p>
         </div>
-        <Login />
+        {mode === "login" ? (
+          <Login forgotPassword={() => setMode("forgot")} />
+        ) : mode === "forgot" ? (
+          <ForgotEmail handleBack={() => setMode("login")} next={() => setMode("otp")} email={email} setEmail={setEmail} />
+        ) : mode === "otp" ? (
+          <OTP back={() => setMode("forgot")} email={email} next={() => setMode("reset")} />
+        ) : (
+          <ResetPassword />
+        )}
       </main>
     </div>
   );

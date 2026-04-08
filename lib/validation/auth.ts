@@ -18,3 +18,12 @@ export const loginSchema = z.object({
   email: z.string().email("Invalid email address").toLowerCase().trim(),
   password: z.string().min(1, "Password is required"),
 });
+
+export const forgotPasswordSchema = z.object({
+  email: z.string().email("Invalid email address").toLowerCase().trim(),
+});
+
+export const verifyOtpSchema = z.object({
+  email: z.string().email().toLowerCase().trim(),
+  otp: z.string().length(4, "OTP must be 4 digits"),
+});
