@@ -12,6 +12,7 @@ export default function PersonalSection({ isEditing, data, setData }: { isEditin
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-8">
         <Field label="Full Name" value={data.name} isEditing={isEditing} change={(val)=> setData(prev => ({...prev, name: val }))} />
         <Field label="Phone Number" value={"+91 "+ data.phoneNumber} isEditing={isEditing} change={(val)=> setData(prev => ({...prev, phoneNumber: val }))} />
+        <Field label="Email" value={data.email} isEditing={isEditing} change={(val)=> setData(prev => ({...prev, email: val }))} />
       </div>
     </section>
   );

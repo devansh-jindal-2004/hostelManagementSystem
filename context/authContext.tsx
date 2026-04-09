@@ -24,6 +24,7 @@ export interface User {
   department?: string;
   academicYear?: string;
   isProfileComplete: boolean;
+  amountDue?: number
 }
 
 interface AuthContextType {

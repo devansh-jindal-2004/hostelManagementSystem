@@ -8,32 +8,32 @@ const emergencyContactSchema = new mongoose.Schema({
 
 const userSchema = new mongoose.Schema({
   // --- Core Identity ---
-  name: { 
-    type: String, 
+  name: {
+    type: String,
     required: [true, 'Name is required'],
-    trim: true 
+    trim: true
   },
-  email: { 
-    type: String, 
-    required: [true, 'Email is required'], 
-    unique: true, 
+  email: {
+    type: String,
+    required: [true, 'Email is required'],
+    unique: true,
     lowercase: true,
-    trim: true 
+    trim: true
   },
-  password: { 
-    type: String, 
+  password: {
+    type: String,
     required: [true, 'Password is required'],
-    select: false // Automatically excludes password from queries for security
+    select: false 
   },
-  role: { 
-    type: String, 
-    enum: ['admin', 'warden', 'student'], 
-    default: 'student' 
+  role: {
+    type: String,
+    enum: ['admin', 'warden', 'student'],
+    default: 'student'
   },
-  gender: { 
-    type: String, 
-    enum: ['male', 'female', 'other'], 
-    required: true 
+  gender: {
+    type: String,
+    enum: ['male', 'female', 'other'],
+    required: true
   },
 
   otp: {
@@ -51,26 +51,29 @@ const userSchema = new mongoose.Schema({
   bedNumber: { type: String, trim: true },
 
   // --- Contact & Security ---
-  phoneNumber: { 
-    type: String, 
-    required: [true, 'Phone number is required'] 
+  phoneNumber: {
+    type: String,
+    required: [true, 'Phone number is required']
   },
   emergencyContact: { type: emergencyContactSchema },
 
   // --- Academic Info (For Students) ---
-  registrationNumber: { 
-    type: String, 
-    unique: true, 
+  registrationNumber: {
+    type: String,
+    unique: true,
     sparse: true,
-    trim: true 
+    trim: true
   },
   department: { type: String, trim: true },
   academicYear: { type: String, trim: true },
 
   // --- System Metadata ---
-  isProfileComplete: { 
-    type: Boolean, 
-    default: false 
+  isProfileComplete: {
+    type: Boolean,
+    default: false
+  },
+  amountDue: {
+    type: Number, default: 0
   }
 }, {
   timestamps: true

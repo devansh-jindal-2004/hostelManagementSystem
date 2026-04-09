@@ -9,10 +9,13 @@ import EmergencySection from '@/components/profile/EmergencySection';
 import HostelSection from '@/components/profile/HostelSection';
 import { useAuth, User } from '@/context/authContext';
 import { useRouter } from 'next/navigation';
+import { useUpdateUser } from '@/hooks/auth/useUpdateUser';
+import { toast } from 'sonner';
+import Link from 'next/link';
 
 export default function page() {
     const [isEditing, setIsEditing] = useState(false);
-    const [isSaving, setIsSaving] = useState(false);
+    const { loading, updateUserFn } = useUpdateUser()
     const { user, isLoading } = useAuth()
     const router = useRouter()
     const [data, setData] = useState<User>({
@@ -43,6 +46,38 @@ export default function page() {
         }
     }, [user, router, isLoading])
 
+    const handleSubmit = () => {
+        const requiredFields: (keyof User)[] = [
+            "name",
+            "email",
+            "phoneNumber",
+            "gender",
+            "department",
+            "registrationNumber",
+            "academicYear",
+            "hostelBlock",
+            "roomNumber",
+            "bedNumber"
+        ];
+
+        for (const field of requiredFields) {
+            if (!data[field] || data[field].toString().trim() === "") {
+                return toast.error(`Please provide your ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`);
+            }
+        }
+
+        if (
+            !data.emergencyContact?.name?.trim() ||
+            !data.emergencyContact?.relationship?.trim() ||
+            !data.emergencyContact?.phone?.trim()
+        ) {
+            return toast.error("Please complete all emergency contact details");
+        }
+
+        updateUserFn(data)
+        setIsEditing(false)
+    }
+
 
     return (
         <div className="min-h-screen bg-[#F8FAFC] py-8 px-4 md:py-12">
@@ -50,10 +85,12 @@ export default function page() {
 
                 {/* Navigation & Controls */}
                 <div className="flex items-center justify-between px-2">
-                    <button className="flex items-center gap-2 text-slate-500 hover:text-slate-800 font-semibold transition-colors group">
-                        <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
-                        Back
-                    </button>
+                    <Link href={`/${user?.role}`} >
+                        <button className="flex items-center gap-2 text-slate-500 hover:text-slate-800 font-semibold transition-colors group">
+                            <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
+                            Back
+                        </button>
+                    </Link>
 
                     <div className="flex gap-3">
                         <button
@@ -63,10 +100,12 @@ export default function page() {
                         >
                             {isEditing ? <><X size={18} /> Cancel</> : <><Edit3 size={18} /> Edit Profile</>}
                         </button>
-                        <button className="flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 rounded-2xl text-slate-700 font-bold shadow-sm hover:bg-slate-50 transition-all">
-                            <LayoutDashboard size={18} className="text-blue-600" />
-                            Dashboard
-                        </button>
+                        <Link href={`/${user?.role}`}>
+                            <button className="flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 rounded-2xl text-slate-700 font-bold shadow-sm hover:bg-slate-50 transition-all">
+                                <LayoutDashboard size={18} className="text-blue-600" />
+                                Dashboard
+                            </button>
+                        </Link>
                     </div>
                 </div>
 
@@ -86,8 +125,8 @@ export default function page() {
                             <HostelSection isEditing={isEditing} data={data} setData={setData} />
                         )}
                         {isEditing && (
-                            <button className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-5 rounded-4xl flex items-center justify-center gap-3 transition-all shadow-xl shadow-slate-200 active:scale-[0.98] animate-in slide-in-from-top-4">
-                                {isSaving ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
+                            <button className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-5 rounded-4xl flex items-center justify-center gap-3 transition-all shadow-xl shadow-slate-200 active:scale-[0.98] animate-in slide-in-from-top-4" onClick={handleSubmit}>
+                                {loading ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
                                 <span>Save Changes</span>
                             </button>
                         )}

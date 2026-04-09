@@ -46,7 +46,7 @@ export async function POST(request: Request) {
         const newUser = await User.create({
             ...validation.data,
             password: hashedPassword,
-            isProfileComplete: false
+            isProfileComplete: false,
         });
 
         // Convert to plain object and strip password
