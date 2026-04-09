@@ -1,0 +1,124 @@
+"use client";
+
+import React, { useEffect, useRef, useState } from 'react';
+import Sidebar from '@/components/layout/Sidebar';
+import { LayoutDashboard, Users, BedDouble, Building2, DollarSign, MessageSquare, Bell, LogOut, Menu, Settings, User, ChevronDown } from 'lucide-react';
+import { useAuth } from '@/context/authContext';
+import Link from 'next/link';
+
+const adminNavItems = [
+    { icon: LayoutDashboard, label: 'Dashboard', href: '/admin' },
+    { icon: Users, label: 'Students', href: '/admin/students' },
+    { icon: BedDouble, label: 'Rooms', href: '/admin/rooms' },
+    { icon: Building2, label: 'Blocks', href: '/admin/blocks' },
+    { icon: DollarSign, label: 'Fees', href: '/admin/fees' },
+    { icon: MessageSquare, label: 'Complaints', href: '/admin/complaints' },
+    { icon: Bell, label: 'Alerts', href: '/admin/announcements' },
+];
+
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+    const { user, logout } = useAuth();
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsDropdownOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    return (
+        <div className="min-h-screen bg-[#F8FAFC]">
+            <Sidebar
+                navItems={adminNavItems} // (Use the nav items defined previously)
+                isOpen={isSidebarOpen}
+                setIsOpen={setIsSidebarOpen}
+            />
+
+            <div className="lg:ml-64 xl:ml-72 flex flex-col min-h-screen">
+                <header className="sticky top-0 z-30 h-20 bg-white/80 backdrop-blur-md border-b border-slate-200 px-4 md:px-10 flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                        <button
+                            onClick={() => setIsSidebarOpen(true)}
+                            className="lg:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-xl transition-colors"
+                        >
+                            <Menu size={24} />
+                        </button>
+                        <div className="hidden sm:block">
+                            <h1 className="text-sm font-bold text-slate-400 uppercase tracking-widest leading-none">Admin</h1>
+                            <p className="text-lg font-bold text-slate-800">HostelGate</p>
+                        </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 md:gap-4">
+                        {/* Notifications */}
+                        <Link href={"/announcements"} >
+                            <button className="p-2.5 text-slate-500 hover:bg-slate-50 rounded-full transition-colors relative">
+                                <Bell size={20} />
+                                <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-blue-600 rounded-full border-2 border-white"></span>
+                            </button>
+                        </Link>
+
+                        <div className="w-px h-8 bg-slate-200 mx-2 hidden sm:block" />
+
+                        {/* Profile Dropdown Container */}
+                        <div className="relative" ref={dropdownRef}>
+                            <button
+                                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                className="flex items-center gap-3 p-1 pr-3 hover:bg-slate-50 rounded-2xl transition-all border border-transparent hover:border-slate-100"
+                            >
+                                <div className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center text-white font-bold text-sm shadow-sm">
+                                    {user?.name?.charAt(0)}
+                                </div>
+
+                                <div className="text-left hidden md:block">
+                                    <p className="text-sm font-bold text-slate-800 leading-none">{user?.name?.split(' ')[0]}</p>
+                                    <p className="text-[10px] font-bold text-slate-400 uppercase mt-1 tracking-wider">{user?.role}</p>
+                                </div>
+
+                                <ChevronDown size={14} className={`text-slate-400 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                            </button>
+
+                            {/* Dropdown Menu */}
+                            {isDropdownOpen && (
+                                <div className="absolute right-0 mt-2 w-56 bg-white border border-slate-200 rounded-2xl shadow-xl shadow-slate-200/60 py-2 animate-in fade-in zoom-in-95 duration-100">
+                                    <Link
+                                        href="/profile"
+                                        onClick={() => setIsDropdownOpen(false)}
+                                        className="flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-blue-600 transition-colors"
+                                    >
+                                        <User size={18} />
+                                        Profile Settings
+                                    </Link>
+
+                                    <div className="h-px bg-slate-100 my-1" />
+
+                                    <button
+                                        onClick={() => {
+                                            setIsDropdownOpen(false);
+                                            logout();
+                                        }}
+                                        className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-red-500 hover:bg-red-50 transition-colors"
+                                    >
+                                        <LogOut size={18} />
+                                        Logout
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </header>
+
+                <main className="flex-1 p-4 md:p-10">
+                    {children}
+                </main>
+            </div>
+        </div>
+    );
+}

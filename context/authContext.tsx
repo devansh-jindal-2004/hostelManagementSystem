@@ -24,8 +24,6 @@ export interface User {
   department?: string;
   academicYear?: string;
   isProfileComplete: boolean;
-  createdAt: string;
-  updatedAt: string;
 }
 
 interface AuthContextType {

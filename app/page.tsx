@@ -2,15 +2,25 @@
 
 import { Building2 } from "lucide-react";
 import Login from "@/components/auth/Login";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import OTP from "@/components/auth/OTP";
 import ForgotEmail from "@/components/auth/ForgotEmail";
 import ResetPassword from "@/components/auth/ResetPassword";
+import { useAuth } from "@/context/authContext";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
 
-  const [mode, setMode] = useState<"login" | "otp" | "reset" | "forgot">("reset")
+  const [mode, setMode] = useState<"login" | "otp" | "reset" | "forgot">("forgot")
   const [email, setEmail] = useState("")
+  const {user, isLoading} = useAuth()
+  const router = useRouter()
+
+  useEffect(()=> {
+    if(!isLoading && user) {
+      router.push(`/${user.role}`)
+    }
+  },[user, isLoading, router])
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#f8fafc] p-6 font-sans text-slate-900">

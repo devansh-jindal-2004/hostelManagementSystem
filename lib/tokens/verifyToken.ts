@@ -1,23 +1,28 @@
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
-import crypto from "crypto";
-import { UserModel } from "@/models/user.model";
+import jwt from "jsonwebtoken";
+import User from "@/model/auth.model";
+import { connectToDatabase } from "@/lib/db/db";
 
 export async function verifyToken() {
     try {
+        await connectToDatabase();
+        
         const cookieStore = await cookies();
         const token = cookieStore.get("token")?.value;
 
         if (!token) {
-            return null
+            console.log("No token found in cookies");
+            return null;
         }
 
-        const tokenHash = crypto
-            .createHash("sha256")
-            .update(token)
-            .digest("hex");
+        const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { userId: string };
 
-        const user = await UserModel.findOne({ tokenHash });
+        if (!decoded || !decoded.userId) {
+            console.log("Invalid token payload");
+            return null;
+        }
+
+        const user = await User.findById(decoded.userId);
 
         if (!user) {
             return null;
@@ -25,11 +30,7 @@ export async function verifyToken() {
 
         return user;
 
-    } catch (error) {
-        console.log(error);
-        return NextResponse.json(
-            { message: "Server error" },
-            { status: 500 }
-        );
+    } catch {        
+        return null;
     }
 }

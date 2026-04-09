@@ -23,4 +23,6 @@ export async function generateToken(userId: string){
         path: "/",
         maxAge: 60 * 60 * 24 * 7,
     })
+
+    return tokenHash;
 }

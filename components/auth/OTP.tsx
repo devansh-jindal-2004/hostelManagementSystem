@@ -95,7 +95,7 @@ function OTP({ back, email, next }: { back: () => void, email: string, next: () 
                     className="text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors disabled:text-slate-400 disabled:cursor-not-allowed flex items-center justify-center gap-2 mx-auto"
                     onClick={() => requestOtpFn({ email })}
                 >
-                    {!otpLoading ? (
+                    {otpLoading ? (
                         <>
                             <div className="w-3 h-3 border-2 border-blue-600/20 border-t-blue-600 rounded-full animate-spin" />
                             Sending...

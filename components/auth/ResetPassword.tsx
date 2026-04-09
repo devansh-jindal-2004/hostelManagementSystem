@@ -8,13 +8,13 @@ function ResetPassword() {
     const [showPassword, setShowPassword] = useState(false)
     const {resetFn, loading: isLoading} = useReset()
 
-    const onSubmit = () => {
+    const handleSubmit = () => {
         resetFn({password})
     }
 
     return (
         <div className="bg-white border border-slate-200 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
-            <form className="p-8 md:p-10 pt-4 md:pt-4 space-y-6">
+            <div className="p-8 md:p-10 pt-4 md:pt-4 space-y-6">
                 <label className="text-sm font-semibold text-slate-700 ml-1" htmlFor="email">
                         New Password
                     </label>
@@ -53,7 +53,7 @@ function ResetPassword() {
                 {/* Action Button */}
                 <button
                     className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-3 transition-all active:scale-[0.98] disabled:opacity-70 group shadow-xl shadow-slate-200"
-                    onClick={onSubmit}
+                    onClick={handleSubmit}
                 >
                     {isLoading ? (
                         <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
@@ -61,7 +61,7 @@ function ResetPassword() {
                         <div>Reset</div>
                     )}
                 </button>
-            </form>
+            </div>
         </div>
     )
 }
