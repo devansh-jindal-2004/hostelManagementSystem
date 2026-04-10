@@ -38,7 +38,7 @@ export const ModalFooter = ({ mode, onSave, onClose, onDelete, disabled }: {mode
     <button
       onClick={onSave}
       disabled={disabled}
-      className="flex-[2] py-4 bg-slate-900 text-white rounded-2xl font-bold shadow-xl shadow-slate-200 flex items-center justify-center gap-2 disabled:opacity-50 active:scale-95 transition-all"
+      className="flex-2 py-4 bg-slate-900 text-white rounded-2xl font-bold shadow-xl shadow-slate-200 flex items-center justify-center gap-2 disabled:opacity-50 active:scale-95 transition-all"
     >
       <Save size={18} />
       {mode === 'create' ? 'Confirm Room' : 'Apply Changes'}

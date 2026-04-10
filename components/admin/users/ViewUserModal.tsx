@@ -94,7 +94,7 @@ export default function ViewUserModal({ user, isOpen, onClose }: {user: UserType
               {/* Emergency Contact */}
               <div className="space-y-4">
                 <h3 className="text-[11px] font-black text-rose-400 uppercase tracking-[0.2em] ml-1">Emergency Contact</h3>
-                <div className="p-6 bg-rose-50/50 border border-rose-100 rounded-[2rem] grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="p-6 bg-rose-50/50 border border-rose-100 rounded-4xl grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex items-center gap-4">
                     <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-rose-500 shadow-sm border border-rose-100"><User size={18} /></div>
                     <div>
@@ -113,7 +113,7 @@ export default function ViewUserModal({ user, isOpen, onClose }: {user: UserType
               </div>
 
               {/* Finance Balance */}
-              <div className="p-6 bg-slate-900 rounded-[2rem] flex justify-between items-center text-white shadow-xl shadow-slate-200">
+              <div className="p-6 bg-slate-900 rounded-4xl flex justify-between items-center text-white shadow-xl shadow-slate-200">
                 <div>
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Account Balance</p>
                   <p className="text-2xl font-black italic">₹{user.amountDue || 0}</p>

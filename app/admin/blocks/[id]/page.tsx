@@ -63,7 +63,7 @@ export default function BlockDetailPage() {
 
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
-                        <div className="w-16 h-16 bg-slate-900 rounded-[1.5rem] flex items-center justify-center text-white shadow-xl shadow-slate-200 border-4 border-white">
+                        <div className="w-16 h-16 bg-slate-900 rounded-3xl flex items-center justify-center text-white shadow-xl shadow-slate-200 border-4 border-white">
                             <DoorOpen size={28} />
                         </div>
                         <div>
@@ -127,7 +127,7 @@ function StatsCard({ icon: Icon, label, value, color }: any) {
     };
 
     return (
-        <div className="bg-white border border-slate-100 p-6 rounded-[2rem] shadow-sm flex items-center gap-4">
+        <div className="bg-white border border-slate-100 p-6 rounded-4xl shadow-sm flex items-center gap-4">
             <div className={`p-3 rounded-2xl ${colors[color]}`}>
                 <Icon size={20} />
             </div>
@@ -145,7 +145,7 @@ function RoomCard({ room, onClick }: { room: Room, onClick: () => void }) {
     return (
         <div
             onClick={onClick}
-            className="bg-white border border-slate-100 rounded-[2rem] p-6 shadow-sm hover:shadow-md hover:border-slate-200 transition-all group cursor-pointer"
+            className="bg-white border border-slate-100 rounded-4xl p-6 shadow-sm hover:shadow-md hover:border-slate-200 transition-all group cursor-pointer"
         >
             {/* Top Header Section */}
             <div className="flex items-start justify-between mb-6">

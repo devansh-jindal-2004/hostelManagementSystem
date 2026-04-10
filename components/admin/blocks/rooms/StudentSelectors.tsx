@@ -8,7 +8,7 @@ export const OccupantChip = ({ id, users, onRemove }: {id: string, users: User[]
       <div className="w-5 h-5 rounded-md bg-slate-100 flex items-center justify-center text-[8px] uppercase">
         {student?.name?.charAt(0) || '?'}
       </div>
-      <span className="truncate max-w-[100px]">{student?.name || 'Unknown'}</span>
+      <span className="truncate max-w-25">{student?.name || 'Unknown'}</span>
       <button onClick={() => onRemove(id)} className="p-1 hover:bg-rose-50 hover:text-rose-600 rounded-lg transition-colors">
         <X size={14} />
       </button>

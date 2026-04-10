@@ -60,7 +60,7 @@ export default function UsersPage() {
       </div>
 
       {/* 3. Main Content: Grid for Mobile, Table for Desktop */}
-      <div className="rounded-[2rem] overflow-hidden">
+      <div className="rounded-4xl overflow-hidden">
         {loading ? (
           <div className="py-20 flex justify-center"><Loader2 className="animate-spin text-slate-300" size={40} /></div>
         ) : (
