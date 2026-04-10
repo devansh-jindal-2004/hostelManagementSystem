@@ -3,10 +3,17 @@ import bcrypt from "bcryptjs";
 import User from "@/model/auth.model";
 import { signupSchema } from "@/lib/validation/auth";
 import { connectToDatabase } from "@/lib/db/db";
+import { verifyToken } from "@/lib/tokens/verifyToken";
 
 export async function POST(request: Request) {
     try {
         await connectToDatabase();
+
+        const authenticatedUser = await verifyToken();
+        if (!authenticatedUser || authenticatedUser.role == "student") {
+            return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+        }
+
         const body = await request.json();
 
         // 1. Validate & Sanitize using Zod
@@ -58,7 +65,7 @@ export async function POST(request: Request) {
             { status: 201 }
         );
 
-    } catch (error: any) {
+    } catch (error) {
         return NextResponse.json(
             { message: "Internal Server Error" },
             { status: 500 }

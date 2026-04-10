@@ -5,10 +5,11 @@ import Sidebar from '@/components/layout/Sidebar';
 import { LayoutDashboard, Users, BedDouble, Building2, DollarSign, MessageSquare, Bell, LogOut, Menu, Settings, User, ChevronDown } from 'lucide-react';
 import { useAuth } from '@/context/authContext';
 import Link from 'next/link';
+import { UsersProvider } from '@/context/UsersContext';
 
 const adminNavItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/admin' },
-    { icon: Users, label: 'Students', href: '/admin/students' },
+    { icon: Users, label: 'Users', href: '/admin/users' },
     { icon: BedDouble, label: 'Rooms', href: '/admin/rooms' },
     { icon: Building2, label: 'Blocks', href: '/admin/blocks' },
     { icon: DollarSign, label: 'Fees', href: '/admin/fees' },
@@ -116,7 +117,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 </header>
 
                 <main className="flex-1 p-4 md:p-10">
-                    {children}
+                    <UsersProvider>
+                        {children}
+                    </UsersProvider>
                 </main>
             </div>
         </div>

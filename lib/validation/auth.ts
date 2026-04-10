@@ -3,10 +3,10 @@ import { z } from "zod";
 export const signupSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").trim(),
   email: z.string().email("Invalid email address").toLowerCase().trim(),
-  password: z.string().min(8, "Password must be at least 8 characters"),
+  password: z.string().min(8, "Password must be at least 8 characters").default("Welcome1"),
   role: z.enum(["admin", "warden", "student"]).default("student"),
   gender: z.enum(["male", "female", "other"]),
-  phoneNumber: z.string().regex(/^\d{10}$/, "Phone number must be 10 digits"),
+  phoneNumber: z.string().regex(/^\d{10}$/, "Phone number must be 10 digits").optional(),
 
   // Academic info made optional but validated if present
   registrationNumber: z.string().trim().optional(),
