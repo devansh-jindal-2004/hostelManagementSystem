@@ -1,0 +1,5 @@
+MONGODB_URI="connectionString"
+JWT_SECRET="your_jwt_secret_key"
+
+EMAIL_SERVER_USER="devanshjindal31@gmail.com"
+EMAIL_SERVER_PASS="pass"
