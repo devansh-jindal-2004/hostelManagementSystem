@@ -1,7 +1,6 @@
 "use client";
 
 import { createContext, useContext, useState, ReactNode } from 'react';
-import { User } from './authContext';
 import { toast } from 'sonner';
 
 export interface Room {
@@ -38,7 +37,7 @@ export function RoomProvider({ children }: { children: ReactNode }) {
       } else {
         toast.error(data.message || "Failed to load rooms");
       }
-    } catch (error) {
+    } catch {
       toast.error("Connection error while fetching rooms");
     } finally {
       setLoading(false);

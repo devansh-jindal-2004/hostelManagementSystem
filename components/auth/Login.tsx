@@ -1,6 +1,5 @@
 "use state"
 import { useState } from "react";
-import Link from "next/link";
 import { Lock, Mail, ArrowRight, EyeOff, Eye } from "lucide-react";
 import { useLogin } from "@/hooks/auth/useLogin";
 import { toast } from "sonner";

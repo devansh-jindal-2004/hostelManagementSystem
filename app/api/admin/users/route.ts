@@ -3,7 +3,7 @@ import { verifyToken } from "@/lib/tokens/verifyToken";
 import User from "@/model/auth.model";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
     try {
         await connectToDatabase();
 

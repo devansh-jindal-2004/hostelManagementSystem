@@ -3,12 +3,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Search, Users } from 'lucide-react';
 import { useUsers } from '@/context/UsersContext';
-import { FormInput, FormSelect } from './FormFields';
+import { FormInput } from './FormFields';
 import { OccupantChip, SuggestionItem } from './StudentSelectors';
 import { ModalHeader, ModalFooter } from './ModalShell';
 import { Room } from '@/context/roomContext';
 import { useAddRoom } from '@/hooks/admin/room/useAddRoom';
-import { toast } from 'sonner';
 import { useUpdateRoom } from '@/hooks/admin/room/useUpdateRoom';
 import { useDeleteRoom } from '@/hooks/admin/room/useDeleteRoom';
 
@@ -27,13 +26,13 @@ export default function RoomModal({ isOpen, mode, roomData, blockId, onClose }: 
             setFormData({
                 roomNumber: roomData.roomNumber || '',
                 capacity: roomData.capacity || 2,
-                students: roomData.students?.map((s: any) => typeof s === 'object' ? s._id : s) || [],
+                students: roomData.students || [],
                 block: blockId
             });
         } else {
             setFormData({ roomNumber: '', capacity: 2, students: [], block: blockId });
         }
-    }, [roomData, isOpen, mode]);
+    }, [roomData, isOpen, mode, blockId]);
 
     if (!isOpen) return null;
 
@@ -58,7 +57,7 @@ export default function RoomModal({ isOpen, mode, roomData, blockId, onClose }: 
     }
 
     return (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md">
+        <div className="fixed inset-0 z-70 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md">
             <div className="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl border border-slate-100 overflow-hidden flex flex-col max-h-[90vh]">
 
                 <ModalHeader mode={mode} blockId={blockId} onClose={onClose} />
@@ -95,7 +94,7 @@ export default function RoomModal({ isOpen, mode, roomData, blockId, onClose }: 
                                 </div>
                             )}
                         </div>
-                        <div className="flex flex-wrap gap-2 p-4 bg-slate-50 rounded-2xl min-h-[100px] content-start border border-slate-100 shadow-inner">
+                        <div className="flex flex-wrap gap-2 p-4 bg-slate-50 rounded-2xl min-h-25 content-start border border-slate-100 shadow-inner">
                             {formData.students.length ? formData.students.map(id => (
                                 <OccupantChip key={id} id={id} users={users} onRemove={(sId: string) => setFormData({ ...formData, students: formData.students.filter(id => id !== sId) })} />
                             )) : (

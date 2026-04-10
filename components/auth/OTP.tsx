@@ -2,13 +2,12 @@ import { useRequestOtp } from '@/hooks/auth/useRequestOtp';
 import { useVerifyOtp } from '@/hooks/auth/useVerifyOtp';
 import { Edit2 } from 'lucide-react';
 import React, { useState } from 'react'
-import { toast } from 'sonner';
 
 function OTP({ back, email, next }: { back: () => void, email: string, next: () => void }) {
 
     const [otp, setOtp] = useState(["", "", "", ""]);
     const { requestOtpFn, loading: otpLoading } = useRequestOtp()
-    const { verifyOtpFn, loading: verifyLoading } = useVerifyOtp()
+    const { verifyOtpFn } = useVerifyOtp()
 
     const handleVerify = async (otpValue: string) => {
         const result = await verifyOtpFn({ email, otp: otpValue })

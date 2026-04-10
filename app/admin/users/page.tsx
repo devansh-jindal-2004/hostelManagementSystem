@@ -1,17 +1,16 @@
 "use client";
 
 import { useState } from 'react';
-import { Users, ShieldCheck, UserCog, Search, UserPlus, Trash2, Eye, Loader2, IndianRupee } from 'lucide-react';
+import { Users, ShieldCheck, UserCog, UserPlus, Eye, Loader2 } from 'lucide-react';
 import { useUsers } from '@/context/UsersContext';
 import AddUserModal from '@/components/admin/users/AddUserModel/AddUserModel';
 import ViewUserModal from '@/components/admin/users/ViewUserModal';
-import { toast } from 'sonner';
+import { User, UserRole } from '@/context/authContext';
 
 export default function UsersPage() {
-  const { activeTab, setActiveTab, searchQuery, setSearchQuery, users, setUsers, loading } = useUsers();
+  const { activeTab, setActiveTab, users, loading } = useUsers();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<any>(null);
-  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [selectedUser, setSelectedUser] = useState<User|null>(null);
 
   const tabs = [
     { id: 'student', label: 'Students', icon: Users, color: 'blue' },
@@ -45,7 +44,7 @@ export default function UsersPage() {
             {tabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                onClick={() => setActiveTab(tab.id as UserRole)}
                 className={`flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-bold transition-all whitespace-nowrap border ${
                   activeTab === tab.id 
                   ? 'bg-slate-900 text-white border-slate-900 shadow-md' 
@@ -146,13 +145,13 @@ export default function UsersPage() {
       </div>
 
       <AddUserModal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} onSuccess={() => {}} />
-      <ViewUserModal user={selectedUser} isOpen={!!selectedUser} onClose={() => setSelectedUser(null)} />
+      {selectedUser && <ViewUserModal user={selectedUser} isOpen={!!selectedUser} onClose={() => setSelectedUser(null)} />}
     </div>
   );
 }
 
 // Helper Badge Component
-function StatusBadge({ user, isStudent }: { user: any; isStudent: boolean }) {
+function StatusBadge({ user, isStudent }: { user: User; isStudent: boolean }) {
   if (!isStudent) return <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full uppercase">Active</span>;
 
   const isPaid = user.amountDue === 0;

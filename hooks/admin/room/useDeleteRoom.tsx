@@ -1,6 +1,6 @@
 import { User } from "@/context/authContext";
 import { Block, useBlocks } from "@/context/blockContext";
-import { Room, useRooms } from "@/context/roomContext";
+import { useRooms } from "@/context/roomContext";
 import { useUsers } from "@/context/UsersContext";
 import { useState } from "react";
 import { toast } from "sonner";

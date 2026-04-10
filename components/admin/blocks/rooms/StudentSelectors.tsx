@@ -1,7 +1,8 @@
+import { User } from '@/context/authContext';
 import { X, UserPlus } from 'lucide-react';
 
-export const OccupantChip = ({ id, users, onRemove }: any) => {
-  const student = users.find((u: any) => u._id === id);
+export const OccupantChip = ({ id, users, onRemove }: {id: string, users: User[], onRemove: (id: string)=> void}) => {
+  const student = users.find((u: User) => u._id === id);
   return (
     <div className="flex items-center gap-2 bg-white border border-slate-200 pl-3 pr-1 py-1.5 rounded-xl text-xs font-bold text-slate-700 shadow-sm animate-in zoom-in-95">
       <div className="w-5 h-5 rounded-md bg-slate-100 flex items-center justify-center text-[8px] uppercase">
@@ -15,7 +16,7 @@ export const OccupantChip = ({ id, users, onRemove }: any) => {
   );
 };
 
-export const SuggestionItem = ({ student, onAdd }: any) => (
+export const SuggestionItem = ({ student, onAdd }: {student: User, onAdd: (id: string) => void}) => (
   <button
     type="button"
     onClick={() => onAdd(student._id)}

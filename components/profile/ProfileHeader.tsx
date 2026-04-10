@@ -1,6 +1,7 @@
+import { User } from '@/context/authContext';
 import { Mail } from 'lucide-react';
 
-export default function ProfileHeader({ user }: any) {
+export default function ProfileHeader({ user }: {user: User}) {
   return (
     <div className="bg-white border border-slate-200 rounded-[2.5rem] p-8 flex flex-col md:flex-row items-center gap-6 shadow-sm">
       <div className="w-24 h-24 bg-slate-900 rounded-3xl flex items-center justify-center text-white text-3xl font-bold shadow-xl shadow-slate-200">

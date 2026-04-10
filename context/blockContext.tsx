@@ -40,7 +40,7 @@ export function BlockProvider({ children }: { children: ReactNode }) {
       } else {
         toast.error(data.message || "Failed to fetch blocks");
       }
-    } catch (error) {
+    } catch {
       toast.error("Something went wrong refresh to load again");
     } finally {
       setLoading(false);

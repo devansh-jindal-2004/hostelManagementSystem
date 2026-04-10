@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Sidebar from '@/components/layout/Sidebar';
-import { LayoutDashboard, Users, BedDouble, Building2, DollarSign, MessageSquare, Bell, LogOut, Menu, Settings, User, ChevronDown } from 'lucide-react';
+import { LayoutDashboard, Users, Building2, DollarSign, MessageSquare, Bell, LogOut, Menu, User, ChevronDown } from 'lucide-react';
 import { useAuth } from '@/context/authContext';
 import Link from 'next/link';
 import { UsersProvider } from '@/context/UsersContext';

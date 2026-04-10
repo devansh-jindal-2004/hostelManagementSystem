@@ -1,7 +1,6 @@
-import { Block, useBlocks } from "@/context/blockContext";
+import { useBlocks } from "@/context/blockContext";
 import { useState } from "react";
 import { toast } from "sonner";
-import { BlockFormData } from "./useAddBlock";
 
 interface DeleteBlockResponse {
     message: string;

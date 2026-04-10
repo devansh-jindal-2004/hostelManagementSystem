@@ -119,7 +119,7 @@ export async function DELETE(
             return NextResponse.json({ message: "Room not found" }, { status: 404 });
         }
 
-        const studentIds = room.students.map((s: any) => s.toString());
+        const studentIds = room.students.map((s: string) => s.toString());
         const blockId = room.block;
         const capacityToRemove = room.capacity;
         const occupancyToRemove = studentIds.length;

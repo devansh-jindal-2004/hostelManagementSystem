@@ -19,12 +19,12 @@ export default function PersonalSection({ isEditing, data, setData }: { isEditin
 }
 
 // Reusable Field Helper
-function Field({ label, value, isEditing, change }: {label: string, value: string, isEditing: boolean, change: (value: string)=> void}) {
+function Field({ label, value, isEditing, change}: {label: string, value: string, isEditing: boolean, change: (value: string)=> void}) {
   return (
     <div className="flex flex-col gap-2.5">
       <label className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-0.5">{label}</label>
       {isEditing ? (
-        <input className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/5 transition-all text-sm font-bold text-slate-800" defaultValue={value} />
+        <input className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/5 transition-all text-sm font-bold text-slate-800" defaultValue={value} onChange={e=> change(e.target.value)} />
       ) : (
         <p className="text-base font-bold text-slate-700 px-1 py-1">{value}</p>
       )}

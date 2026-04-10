@@ -109,7 +109,7 @@ export default function page() {
                     </div>
                 </div>
 
-                <ProfileHeader user={{ name: data.name, email: data.email, role: data.role }} />
+                <ProfileHeader user={data} />
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div className="lg:col-span-2 space-y-8">

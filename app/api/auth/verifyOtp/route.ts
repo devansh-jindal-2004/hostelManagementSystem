@@ -71,7 +71,7 @@ export async function POST(request: Request) {
             { status: 200 }
         );
 
-    } catch (error: any) {
+    } catch (error) {
         console.error("VERIFY_OTP_ERROR:", error);
         return NextResponse.json(
             { message: "Internal Server Error" },

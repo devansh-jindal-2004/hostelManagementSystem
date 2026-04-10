@@ -1,6 +1,6 @@
 import { X, DoorOpen, Trash2, Save } from 'lucide-react';
 
-export const ModalHeader = ({ mode, blockId, onClose }: any) => (
+export const ModalHeader = ({ mode, blockId, onClose }: {mode: string, blockId: string, onClose: ()=> void}) => (
   <div className="px-8 py-7 border-b border-slate-50 flex items-center justify-between">
     <div className="flex items-center gap-4">
       <div className="p-3 bg-slate-900 rounded-2xl text-white shadow-lg shadow-slate-200">

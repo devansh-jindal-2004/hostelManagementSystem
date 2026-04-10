@@ -1,6 +1,6 @@
 import { useRequestOtp } from '@/hooks/auth/useRequestOtp';
 import { ArrowRight, Mail, ArrowLeft } from 'lucide-react'
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { toast } from 'sonner';
 
 function ForgotEmail({ handleBack, next, email, setEmail }: { handleBack: () => void, next: () => void, email: string, setEmail: Dispatch<SetStateAction<string>> }) {
@@ -50,7 +50,7 @@ function ForgotEmail({ handleBack, next, email, setEmail }: { handleBack: () => 
                         />
                     </div>
                     <p className="text-[11px] text-slate-400 ml-1">
-                        We'll send a verification code to this inbox.
+                        We&apos;ll send a verification code to this inbox.
                     </p>
                 </div>
 

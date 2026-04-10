@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import {
   Building2,
-  User,
   DoorOpen,
   BedDouble,
   Plus,
@@ -13,43 +12,6 @@ import {
 import BlockModal from '@/components/admin/blocks/BlockModal'; // Ensure path is correct
 import { Block, useBlocks } from '@/context/blockContext';
 import Link from 'next/link';
-
-// Mock data for Blocks
-const mockBlocks = [
-  {
-    id: "1",
-    name: "Block A",
-    type: "Boys",
-    warden: "Dr. Rajesh Kumar",
-    totalRooms: 50,
-    occupiedRooms: 42,
-    totalBeds: 150,
-    occupiedBeds: 120,
-    bedsPerRoom: 3
-  },
-  {
-    id: "2",
-    name: "Block B",
-    type: "Girls",
-    warden: "Mrs. Sunita Williams",
-    totalRooms: 40,
-    occupiedRooms: 15,
-    totalBeds: 120,
-    occupiedBeds: 45,
-    bedsPerRoom: 3
-  },
-  {
-    id: "3",
-    name: "Block C",
-    type: "Boys",
-    warden: "Mr. Anil Mehra",
-    totalRooms: 60,
-    occupiedRooms: 60,
-    totalBeds: 180,
-    occupiedBeds: 178,
-    bedsPerRoom: 3
-  }
-];
 
 export default function BlocksPage() {
   const { blocks } = useBlocks()

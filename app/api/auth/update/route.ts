@@ -56,7 +56,7 @@ export async function PATCH(req: Request) {
             user: safeUser
         }, { status: 200 });
 
-    } catch (error: any) {
+    } catch (error) {
         console.error("UPDATE_PROFILE_ERROR:", error);
         return NextResponse.json(
             { message: "Internal Server Error" },

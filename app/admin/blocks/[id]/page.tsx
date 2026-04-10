@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-    ArrowLeft, DoorOpen, Users, Bed, Plus, Search,
-    Loader2, Home, ChevronRight, Filter, Settings2
+    ArrowLeft, DoorOpen, Users, Bed, Plus, Loader2, ChevronRight, Settings2
 } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -15,7 +14,6 @@ export default function BlockDetailPage() {
     const { id } = useParams();
     const { blocks, loading: blocksLoading } = useBlocks();
     const [currentBlock, setCurrentBlock] = useState<any>(null);
-    const [searchQuery, setSearchQuery] = useState("");
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalMode, setModalMode] = useState<'create' | 'edit'>('create');
@@ -101,7 +99,7 @@ export default function BlockDetailPage() {
                     </div>
                 ) : (
                     rooms
-                        .filter(r => r.roomNumber.toLowerCase().includes(searchQuery.toLowerCase()))
+                        .filter(r => r.roomNumber.toLowerCase().includes(""))
                         .map((room) => (
                             <RoomCard key={room._id} room={room} onClick={() => handleEditRoom(room)} />
                         ))

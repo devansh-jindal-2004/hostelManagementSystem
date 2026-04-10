@@ -3,25 +3,39 @@
 import React from 'react';
 import { 
   X, Mail, Phone, Shield, 
-  GraduationCap, MapPin, HeartPulse, User 
+  GraduationCap, MapPin, User, 
+  LucideProps
 } from 'lucide-react';
+import { User as UserType } from '@/context/authContext';
 
-export default function ViewUserModal({ user, isOpen, onClose }: any) {
+// --- 1. Move DetailItem OUTSIDE the main component ---
+interface DetailItemProps {
+  icon: React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>;
+  label: string;
+  value: string | number; // Allow number for amountDue
+  className?: string;
+}
+
+const DetailItem = ({ icon: Icon, label, value, className = "" }: DetailItemProps) => (
+  <div className={`flex items-start gap-3 p-4 bg-slate-50 rounded-2xl ${className}`}>
+    <div className="p-2 bg-white rounded-lg text-slate-400 shadow-sm">
+      <Icon size={16} />
+    </div>
+    <div>
+      <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">
+        {label}
+      </p>
+      <p className="text-sm font-bold text-slate-700 break-all">
+        {value || "Not Provided"}
+      </p>
+    </div>
+  </div>
+);
+
+export default function ViewUserModal({ user, isOpen, onClose }: {user: UserType, isOpen: boolean, onClose: ()=> void}) {
   if (!isOpen || !user) return null;
 
   const isStudent = user.role === 'student';
-
-  const DetailItem = ({ icon: Icon, label, value, className = "" }: any) => (
-    <div className={`flex items-start gap-3 p-4 bg-slate-50 rounded-2xl ${className}`}>
-      <div className="p-2 bg-white rounded-lg text-slate-400 shadow-sm">
-        <Icon size={16} />
-      </div>
-      <div>
-        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">{label}</p>
-        <p className="text-sm font-bold text-slate-700 break-all">{value || "Not Provided"}</p>
-      </div>
-    </div>
-  );
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-300">
@@ -50,7 +64,7 @@ export default function ViewUserModal({ user, isOpen, onClose }: any) {
         {/* Content Area */}
         <div className="p-8 overflow-y-auto space-y-8 custom-scrollbar">
           
-          {/* Section: Basic Contact (Shown for Everyone) */}
+          {/* Section: Basic Contact */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <DetailItem icon={Mail} label="Email Address" value={user.email} />
             <DetailItem icon={Phone} label="Contact Number" value={user.phoneNumber} />
@@ -62,18 +76,18 @@ export default function ViewUserModal({ user, isOpen, onClose }: any) {
             <>
               {/* Academic Info */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-slate-50 pt-8">
-                <DetailItem icon={GraduationCap} label="Academic Session" value={user.academicYear} />
-                <DetailItem icon={GraduationCap} label="Reg Number" value={user.registrationNumber} />
-                <DetailItem icon={GraduationCap} label="Department" value={user.department} className="md:col-span-2" />
+                <DetailItem icon={GraduationCap} label="Academic Session" value={user.academicYear || ""} />
+                <DetailItem icon={GraduationCap} label="Reg Number" value={user.registrationNumber || ""} />
+                <DetailItem icon={GraduationCap} label="Department" value={user.department || ""} className="md:col-span-2" />
               </div>
 
               {/* Allocation Info */}
               <div className="space-y-4">
                 <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Hostel Allocation</h3>
                 <div className="grid grid-cols-3 gap-4">
-                  <DetailItem icon={MapPin} label="Block" value={user.hostelBlock} />
-                  <DetailItem icon={MapPin} label="Room" value={user.roomNumber} />
-                  <DetailItem icon={MapPin} label="Bed" value={user.bedNumber} />
+                  <DetailItem icon={MapPin} label="Block" value={user.hostelBlock || ""} />
+                  <DetailItem icon={MapPin} label="Room" value={user.roomNumber || ""} />
+                  <DetailItem icon={MapPin} label="Bed" value={user.bedNumber || ""} />
                 </div>
               </div>
 

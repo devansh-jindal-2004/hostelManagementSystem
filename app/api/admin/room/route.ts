@@ -27,7 +27,7 @@ export async function GET(req: Request) {
             .sort({ roomNumber: 1 });
 
         return NextResponse.json({ rooms }, { status: 200 });
-    } catch (error) {
-
+    } catch {
+        return NextResponse.json({message: "Internal server error"},{status: 500})
     }
 }

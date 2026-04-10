@@ -1,9 +1,6 @@
 import { cookies } from "next/headers";
-import * as crypto from "crypto";
-import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/db/db";
-import User from "@/model/auth.model";
 
 export async function GET() {
     try {

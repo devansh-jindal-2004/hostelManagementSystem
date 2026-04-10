@@ -16,7 +16,7 @@ export async function GET() {
         const { password: _, otp: __, otpExpiry: ___, ...safeUser } = userObj;
 
         return NextResponse.json({ user: safeUser }, { status: 200 });
-    } catch (error) {
+    } catch {
         return NextResponse.json({ message: "server error" }, { status: 500 })
     }
 }

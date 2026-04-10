@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState, ReactNode, Dispatch, SetSta
 import { User } from './authContext';
 import { toast } from 'sonner';
 
-type UserRole = 'student' | 'warden' | 'admin';
+export type UserRole = 'student' | 'warden' | 'admin';
 
 interface UsersContextType {
     users: User[];

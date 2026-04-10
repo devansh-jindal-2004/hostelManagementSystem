@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState } from 'react';
-import { X, UserPlus, Loader2, ShieldCheck, GraduationCap, Phone, Info } from 'lucide-react';
-import Input from './Input';
+import { useState } from 'react';
+import { X, UserPlus, Loader2, Info } from 'lucide-react';
 import AcademicSection from './AcademicSection';
 import IdentitySection from './IdentitySection';
 import { useAddUser } from '@/hooks/admin/users/useAddUser';
@@ -72,7 +71,7 @@ export default function AddUserModal({ isOpen, onClose }: AddUserModalProps) {
           <div className="flex items-start gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
             <Info size={18} className="text-slate-400 mt-0.5" />
             <p className="text-[13px] text-slate-500 leading-relaxed font-medium">
-              A default password <span className="text-slate-900 font-bold">"Welcome1"</span> will be assigned. Users will be able to change it upon after first login.
+              A default password <span className="text-slate-900 font-bold">&quot;Welcome1&quot;</span> will be assigned. Users will be able to change it upon after first login.
             </p>
           </div>
 
