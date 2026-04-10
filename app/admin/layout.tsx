@@ -7,11 +7,11 @@ import { useAuth } from '@/context/authContext';
 import Link from 'next/link';
 import { UsersProvider } from '@/context/UsersContext';
 import { BlockProvider } from '@/context/blockContext';
+import { RoomProvider } from '@/context/roomContext';
 
 const adminNavItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/admin' },
     { icon: Users, label: 'Users', href: '/admin/users' },
-    { icon: BedDouble, label: 'Rooms', href: '/admin/rooms' },
     { icon: Building2, label: 'Blocks', href: '/admin/blocks' },
     { icon: DollarSign, label: 'Fees', href: '/admin/fees' },
     { icon: MessageSquare, label: 'Complaints', href: '/admin/complaints' },
@@ -120,7 +120,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <main className="flex-1 p-4 md:p-10">
                     <BlockProvider>
                         <UsersProvider>
-                            {children}
+                            <RoomProvider>
+                                {children}
+                            </RoomProvider>
                         </UsersProvider>
                     </BlockProvider>
                 </main>

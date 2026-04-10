@@ -171,7 +171,7 @@ function BlockCard({ block, onEdit }: BlockCardProps) {
             <span className="text-[10px] font-bold uppercase tracking-wider">Available</span>
           </div>
           <p className="text-sm font-black text-slate-700">
-            {block.occupiedBeds - block.totalBeds} <span className="text-slate-400 font-medium text-[10px]">Vacant</span>
+            {block.totalBeds - block.occupiedBeds} <span className="text-slate-400 font-medium text-[10px]">Vacant</span>
           </p>
         </div>
       </div>

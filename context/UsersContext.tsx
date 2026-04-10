@@ -10,10 +10,9 @@ interface UsersContextType {
     users: User[];
     activeTab: UserRole;
     setActiveTab: (role: UserRole) => void;
-    searchQuery: string;
-    setSearchQuery: (query: string) => void;
     loading: boolean;
     setUsers: Dispatch<SetStateAction<User[]>>
+    updateUser: (users: User) => void
 }
 
 const UsersContext = createContext<UsersContextType | undefined>(undefined);
@@ -21,7 +20,6 @@ const UsersContext = createContext<UsersContextType | undefined>(undefined);
 export function UsersProvider({ children }: { children: ReactNode }) {
     const [users, setUsers] = useState<User[]>([]);
     const [activeTab, setActiveTab] = useState<UserRole>('student');
-    const [searchQuery, setSearchQuery] = useState("");
     const [loading, setLoading] = useState(false);
 
     // Fetch Logic
@@ -32,7 +30,7 @@ export function UsersProvider({ children }: { children: ReactNode }) {
             const res = await fetch(`/api/admin/users`);
             const data = await res.json();
 
-            if(!res.ok) return toast.error(data.message)
+            if (!res.ok) return toast.error(data.message)
 
             setUsers(data.users);
         } catch (error) {
@@ -52,19 +50,18 @@ export function UsersProvider({ children }: { children: ReactNode }) {
         setActiveTab(role);
     };
 
-    const handleSearchChange = (query: string) => {
-        setSearchQuery(query);
-    };
+    const updateUser = (user: User) => {
+        setUsers(prev => ([...prev.map(u => u._id === user._id ? user : u)]))
+    }
 
     return (
         <UsersContext.Provider value={{
             users,
             activeTab,
             setActiveTab: handleTabChange,
-            searchQuery,
-            setSearchQuery: handleSearchChange,
             loading,
-            setUsers
+            setUsers,
+            updateUser
         }}>
             {children}
         </UsersContext.Provider>
