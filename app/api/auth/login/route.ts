@@ -13,12 +13,17 @@ export async function POST(req: Request) {
         // 1. Validate Input
         const validation = loginSchema.safeParse(body);
         if (!validation.success) {
+            const errors = validation.error.flatten().fieldErrors;
+
+            const errorMessage = Object.values(errors)
+                .flat()
+                .join(". ");
+
             return NextResponse.json(
-                { message: "Invalid input", errors: validation.error.format() },
+                { message: errorMessage },
                 { status: 400 }
             );
         }
-
         const { email, password } = validation.data;
 
         // 2. Find User & Include Password (since model hides it by default)

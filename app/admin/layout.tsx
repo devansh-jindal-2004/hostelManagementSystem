@@ -6,6 +6,7 @@ import { LayoutDashboard, Users, BedDouble, Building2, DollarSign, MessageSquare
 import { useAuth } from '@/context/authContext';
 import Link from 'next/link';
 import { UsersProvider } from '@/context/UsersContext';
+import { BlockProvider } from '@/context/blockContext';
 
 const adminNavItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/admin' },
@@ -117,9 +118,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 </header>
 
                 <main className="flex-1 p-4 md:p-10">
-                    <UsersProvider>
-                        {children}
-                    </UsersProvider>
+                    <BlockProvider>
+                        <UsersProvider>
+                            {children}
+                        </UsersProvider>
+                    </BlockProvider>
                 </main>
             </div>
         </div>

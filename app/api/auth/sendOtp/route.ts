@@ -13,8 +13,14 @@ export async function POST(req: Request) {
         // 1. Validate Email with Zod
         const validation = forgotPasswordSchema.safeParse(body);
         if (!validation.success) {
+            const errors = validation.error.flatten().fieldErrors;
+
+            const errorMessage = Object.values(errors)
+                .flat()
+                .join(". ");
+
             return NextResponse.json(
-                { message: "Please enter a valid email address" },
+                { message: errorMessage },
                 { status: 400 }
             );
         }

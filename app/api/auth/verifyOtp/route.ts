@@ -12,8 +12,14 @@ export async function POST(request: Request) {
         // 1. Validate Input
         const validation = verifyOtpSchema.safeParse(body);
         if (!validation.success) {
+            const errors = validation.error.flatten().fieldErrors;
+
+            const errorMessage = Object.values(errors)
+                .flat()
+                .join(". ");
+
             return NextResponse.json(
-                { message: "Invalid email or OTP format" },
+                { message: errorMessage },
                 { status: 400 }
             );
         }

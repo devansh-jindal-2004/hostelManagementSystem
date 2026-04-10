@@ -46,7 +46,7 @@ export default function Sidebar({ navItems, isOpen, setIsOpen }: SidebarProps) {
 
         <nav className="flex-1 px-4 space-y-1">
           {navItems.map((item) => {
-            const isActive = pathname === item.href;
+            const isActive = (pathname === item.href) || (pathname.includes("/admin/blocks") && item.href === "/admin/blocks");
             return (
               <Link
                 key={item.label}

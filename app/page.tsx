@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 
 export default function Home() {
 
-  const [mode, setMode] = useState<"login" | "otp" | "reset" | "forgot">("forgot")
+  const [mode, setMode] = useState<"login" | "otp" | "reset" | "forgot">("login")
   const [email, setEmail] = useState("")
   const {user, isLoading} = useAuth()
   const router = useRouter()

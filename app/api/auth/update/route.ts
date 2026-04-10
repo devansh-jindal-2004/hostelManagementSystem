@@ -3,6 +3,7 @@ import { connectToDatabase } from "@/lib/db/db";
 import User from "@/model/auth.model";
 import { updateProfileSchema } from "@/lib/validation/auth";
 import { verifyToken } from "@/lib/tokens/verifyToken";
+import blockModel from "@/model/block.model";
 
 export async function PATCH(req: Request) {
     try {

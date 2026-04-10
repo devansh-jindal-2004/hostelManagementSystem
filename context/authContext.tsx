@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { useLogout } from "@/hooks/auth/useLogout";
 
 export type UserRole = 'admin' | 'warden' | 'student';
 
@@ -41,6 +42,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+  const { logoutFn } = useLogout()
 
   // Logic to fetch current user from API
   const refreshSession = useCallback(async () => {
@@ -70,6 +72,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const logout = async () => {
+    logoutFn()
     setUser(null);
     router.push("/");
   };
