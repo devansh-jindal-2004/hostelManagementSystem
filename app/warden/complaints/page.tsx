@@ -5,13 +5,6 @@ import { Zap, ListFilter, Clock, MoreVertical } from 'lucide-react';
 import { Complaint, useComplaints } from '@/context/complaintContext';
 import { useUpdateComplaintStatus } from '@/hooks/complaint/useUpdateStatus';
 
-const DEMO_DATA: Complaint[] = [
-    { _id: "1", room: { roomNumber: "202", _id: "11" }, category: "Electrical", title: "Fan sparking ", severity: "Critical", status: "pending", createdAt: "10m", block: { blockName: "aa", _id: "11" }, description: "Regulator smoking and sparks visible at speed 3. " },
-    { _id: "2", room: { roomNumber: "105", _id: "11" }, category: "Plumbing", title: "Major water leak", severity: "High", status: "in-progress", createdAt: "1h", block: { blockName: "aa", _id: "11" }, description: "Main inlet pipe behind flush tank burst. Flooding." },
-    { _id: "3", room: { roomNumber: "312", _id: "11" }, category: "Internet", title: "Wifi Router broken", severity: "Medium", status: "pending", createdAt: "3h", block: { blockName: "aa", _id: "11" }, description: "Power LED is red. No signal in the entire wing." },
-    { _id: "4", room: { roomNumber: "401", _id: "11" }, category: "Furniture", title: "Broken chair leg", severity: "Low", status: "resolved", createdAt: "5h", block: { blockName: "aa", _id: "11" }, description: "Wooden study chair has a loose front-right leg." },
-];
-
 function WardenDashboard() {
 
     const { complaints } = useComplaints()
