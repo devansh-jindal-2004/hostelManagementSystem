@@ -13,18 +13,7 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ message: unauthorized }, { status: 401 })
         }
 
-        const { searchParams } = new URL(req.url);
-        const role = searchParams.get("role");
-
-        let query = {};
-
-        if (role === "student") {
-            query = { targetAudience: { $in: ["all", "students"] } };
-        } else if (role === "staff") {
-            query = { targetAudience: { $in: ["all", "staff"] } };
-        }
-
-        const alerts = await Alert.find(query)
+        const alerts = await Alert.find()
             .populate('createdBy', 'name role')
             .sort({ createdAt: -1 });
 
