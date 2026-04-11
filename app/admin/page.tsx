@@ -70,7 +70,7 @@ export default function AdminDashboard() {
           </div>
           <div className="min-w-0">
             <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Community</p>
-            <h2 className="text-xl font-black text-slate-900 leading-none">{users.length} <span className="text-[10px] text-slate-300 font-bold">Residents</span></h2>
+            <h2 className="text-xl font-black text-slate-900 leading-none">{users.filter(s => s.role == "student").length} <span className="text-[10px] text-slate-300 font-bold">Residents</span></h2>
           </div>
         </div>
 
