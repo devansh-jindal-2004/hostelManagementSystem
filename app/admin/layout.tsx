@@ -9,6 +9,7 @@ import { UsersProvider } from '@/context/UsersContext';
 import { BlockProvider } from '@/context/blockContext';
 import { RoomProvider } from '@/context/roomContext';
 import { useRouter } from 'next/navigation';
+import { ComplaintProvider } from '@/context/complaintContext';
 
 const adminNavItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/admin' },
@@ -118,13 +119,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 </header>
 
                 <main className="flex-1 p-4 md:p-10">
-                    <BlockProvider>
-                        <UsersProvider>
-                            <RoomProvider>
-                                {children}
-                            </RoomProvider>
-                        </UsersProvider>
-                    </BlockProvider>
+                    <ComplaintProvider>
+                        <BlockProvider>
+                            <UsersProvider>
+                                <RoomProvider>
+                                    {children}
+                                </RoomProvider>
+                            </UsersProvider>
+                        </BlockProvider>
+                    </ComplaintProvider>
                 </main>
             </div>
         </div>

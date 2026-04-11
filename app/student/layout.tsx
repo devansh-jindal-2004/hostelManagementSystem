@@ -2,17 +2,16 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Sidebar from '@/components/layout/Sidebar';
-import { LayoutDashboard, Users, MessageSquare, Bell, LogOut, Menu, User, ChevronDown, Notebook } from 'lucide-react';
+import { LayoutDashboard, MessageSquare, Bell, LogOut, Menu, User, ChevronDown } from 'lucide-react';
 import { useAuth } from '@/context/authContext';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { UsersProvider } from '@/context/UsersContext';
 import { RoomProvider } from '@/context/roomContext';
 import { BlockProvider } from '@/context/blockContext';
+import { ComplaintProvider } from '@/context/complaintContext';
 
 const adminNavItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/student' },
-    { icon: Notebook, label: 'Leaves', href: '/student/leaves' },
     { icon: MessageSquare, label: 'Complaints', href: '/student/complaints' },
     { icon: Bell, label: 'Alerts', href: '/student/announcements' },
 ];
@@ -117,11 +116,13 @@ export default function layout({ children }: { children: React.ReactNode }) {
                 </header>
 
                 <main className="flex-1 p-4 md:p-10">
-                    <BlockProvider>
-                        <RoomProvider>
+                    <ComplaintProvider>
+                        <BlockProvider>
+                            <RoomProvider>
                                 {children}
-                        </RoomProvider>
-                    </BlockProvider>
+                            </RoomProvider>
+                        </BlockProvider>
+                    </ComplaintProvider>
                 </main>
             </div>
         </div>

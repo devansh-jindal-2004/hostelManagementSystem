@@ -2,18 +2,18 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Sidebar from '@/components/layout/Sidebar';
-import { LayoutDashboard, Users, MessageSquare, Bell, LogOut, Menu, User, ChevronDown, Notebook } from 'lucide-react';
+import { LayoutDashboard, Users, MessageSquare, Bell, LogOut, Menu, User, ChevronDown } from 'lucide-react';
 import { useAuth } from '@/context/authContext';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { UsersProvider } from '@/context/UsersContext';
 import { RoomProvider } from '@/context/roomContext';
 import { BlockProvider } from '@/context/blockContext';
+import { ComplaintProvider } from '@/context/complaintContext';
 
 const adminNavItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/warden' },
     { icon: Users, label: 'Students', href: '/warden/students' },
-    { icon: Notebook, label: 'Leaves', href: '/warden/leaves' },
     { icon: MessageSquare, label: 'Complaints', href: '/warden/complaints' },
     { icon: Bell, label: 'Alerts', href: '/warden/announcements' },
 ];
@@ -119,13 +119,15 @@ export default function layout({ children }: { children: React.ReactNode }) {
                 </header>
 
                 <main className="flex-1 p-4 md:p-10">
-                    <BlockProvider>
-                        <RoomProvider>
-                            <UsersProvider>
-                                {children}
-                            </UsersProvider>
-                        </RoomProvider>
-                    </BlockProvider>
+                    <ComplaintProvider>
+                        <BlockProvider>
+                            <RoomProvider>
+                                <UsersProvider>
+                                    {children}
+                                </UsersProvider>
+                            </RoomProvider>
+                        </BlockProvider>
+                    </ComplaintProvider>
                 </main>
             </div>
         </div>
