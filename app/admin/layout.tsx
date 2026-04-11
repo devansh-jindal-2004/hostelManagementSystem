@@ -59,14 +59,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     </div>
 
                     <div className="flex items-center gap-2 md:gap-4">
-                        {/* Notifications */}
-                        <Link href={"/announcements"} >
-                            <button className="p-2.5 text-slate-500 hover:bg-slate-50 rounded-full transition-colors relative">
-                                <Bell size={20} />
-                                <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-blue-600 rounded-full border-2 border-white"></span>
-                            </button>
-                        </Link>
-
                         <div className="w-px h-8 bg-slate-200 mx-2 hidden sm:block" />
 
                         {/* Profile Dropdown Container */}

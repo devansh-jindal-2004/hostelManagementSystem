@@ -1,9 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/db/db";
 import User from "@/model/auth.model";
 import { updateProfileSchema } from "@/lib/validation/auth";
 import { verifyToken } from "@/lib/tokens/verifyToken";
-import blockModel from "@/model/block.model";
 
 export async function PATCH(req: Request) {
     try {
@@ -60,6 +59,48 @@ export async function PATCH(req: Request) {
         console.error("UPDATE_PROFILE_ERROR:", error);
         return NextResponse.json(
             { message: "Internal Server Error" },
+            { status: 500 }
+        );
+    }
+}
+
+export async function PUT(req: NextRequest) {
+    try {
+        await connectToDatabase();
+
+        const auth = await verifyToken();
+        if (!auth || auth.role !== "admin") {
+            return NextResponse.json({ message: "Unauthorized access" }, { status: 401 });
+        }
+
+        const body = await req.json();
+        const { amount } = body;
+
+        const dueAmount = Number(amount);
+        
+        if (isNaN(dueAmount) || dueAmount <= 0) {
+            return NextResponse.json(
+                { message: "Please provide a valid positive amount" }, 
+                { status: 400 }
+            );
+        }
+
+        await User.updateMany(
+            { role: "student" },
+            { $inc: { amountDue: dueAmount } }
+        );
+
+        const updatedStudents = await User.find({ role: "student" }).select("-password");
+
+        return NextResponse.json({ 
+            message: "Fees updated",
+            students: updatedStudents
+        }, { status: 200 });
+
+    } catch (error) {
+        console.error("BULK_FEE_UPDATE_ERROR:", error);
+        return NextResponse.json(
+            { message: "Internal Server Error" }, 
             { status: 500 }
         );
     }
