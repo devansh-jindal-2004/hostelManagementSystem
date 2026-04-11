@@ -104,9 +104,9 @@ export default function FeesPage() {
       </div>
 
       {/* Results Table Container with Overflow handling */}
-      <div className="bg-white border border-slate-100 rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden shadow-sm">
+      <div className="bg-white border border-slate-100 rounded-3xl md:rounded-[2.5rem] overflow-hidden shadow-sm">
         <div className="overflow-x-auto custom-scrollbar">
-          <table className="w-full text-left border-collapse min-w-[600px]">
+          <table className="w-full text-left border-collapse min-w-150">
             <thead>
               <tr className="bg-slate-50/50 border-b border-slate-100">
                 <th className="px-5 md:px-8 py-4 md:py-6 text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest">Student</th>
@@ -125,7 +125,7 @@ export default function FeesPage() {
                         <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-slate-100 flex items-center justify-center text-slate-700 font-bold uppercase text-[10px]">
                           {student.name.charAt(0)}
                         </div>
-                        <div className="max-w-[120px] md:max-w-none">
+                        <div className="max-w-30 md:max-w-none">
                           <p className="text-xs md:text-sm font-bold text-slate-800 truncate">{student.name}</p>
                           <p className="text-[9px] md:text-[10px] text-slate-400 font-medium truncate">{student.email}</p>
                         </div>

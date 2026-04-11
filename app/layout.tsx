@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { AuthProvider } from "@/context/authContext";
 import { Toaster } from "sonner";
+import { AlertProvider } from "@/context/alertContext";
 
 export const metadata: Metadata = {
   title: "Hostel Management System",
@@ -20,8 +21,10 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <AuthProvider>
-          {children}
-          <Toaster position="bottom-center" />
+          <AlertProvider>
+            {children}
+            <Toaster position="bottom-center" />
+          </AlertProvider>
         </AuthProvider>
       </body>
     </html>

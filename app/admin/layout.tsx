@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { UsersProvider } from '@/context/UsersContext';
 import { BlockProvider } from '@/context/blockContext';
 import { RoomProvider } from '@/context/roomContext';
+import { useRouter } from 'next/navigation';
 
 const adminNavItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/admin' },
@@ -19,7 +20,8 @@ const adminNavItems = [
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-    const { user, logout } = useAuth();
+    const { user, logout, isLoading } = useAuth();
+    const router = useRouter()
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -34,6 +36,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
+
+    useEffect(()=> {
+        if(isLoading) return 
+        if(user) return router.push(`/${user.role}`)
+        return router.push("/")
+    },[isLoading, user, router])
 
     return (
         <div className="min-h-screen bg-[#F8FAFC]">
