@@ -17,7 +17,7 @@ const adminNavItems = [
     { icon: Building2, label: 'Blocks', href: '/admin/blocks' },
     { icon: DollarSign, label: 'Fees', href: '/admin/fees' },
     { icon: MessageSquare, label: 'Complaints', href: '/admin/complaints' },
-    { icon: Bell, label: 'Alerts', href: '/admin/announcements' },
+    { icon: Bell, label: 'Announcements', href: '/admin/announcements' },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

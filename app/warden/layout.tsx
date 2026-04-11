@@ -15,7 +15,7 @@ const adminNavItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/warden' },
     { icon: Users, label: 'Students', href: '/warden/students' },
     { icon: MessageSquare, label: 'Complaints', href: '/warden/complaints' },
-    { icon: Bell, label: 'Alerts', href: '/warden/announcements' },
+    { icon: Bell, label: 'Announcements', href: '/warden/announcements' },
 ];
 
 export default function layout({ children }: { children: React.ReactNode }) {

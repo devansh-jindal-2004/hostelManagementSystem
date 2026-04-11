@@ -111,7 +111,7 @@ export default function page() {
 
                 <ProfileHeader user={data} />
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="gap-8">
                     <div className="lg:col-span-2 space-y-8">
                         <PersonalSection isEditing={isEditing} data={data} setData={setData} />
                         {user?.role === "student" && (
@@ -121,9 +121,6 @@ export default function page() {
                     </div>
 
                     <div className="space-y-8">
-                        {user?.role === "student" && (
-                            <HostelSection isEditing={isEditing} data={data} setData={setData} />
-                        )}
                         {isEditing && (
                             <button className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-5 rounded-4xl flex items-center justify-center gap-3 transition-all shadow-xl shadow-slate-200 active:scale-[0.98] animate-in slide-in-from-top-4" onClick={handleSubmit}>
                                 {loading ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}

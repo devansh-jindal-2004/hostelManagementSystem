@@ -13,7 +13,7 @@ import { ComplaintProvider } from '@/context/complaintContext';
 const adminNavItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/student' },
     { icon: MessageSquare, label: 'Complaints', href: '/student/complaints' },
-    { icon: Bell, label: 'Alerts', href: '/student/announcements' },
+    { icon: Bell, label: 'Announcements', href: '/student/announcements' },
 ];
 
 export default function layout({ children }: { children: React.ReactNode }) {
