@@ -2,24 +2,23 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Sidebar from '@/components/layout/Sidebar';
-import { LayoutDashboard, Users, Building2, DollarSign, MessageSquare, Bell, LogOut, Menu, User, ChevronDown } from 'lucide-react';
+import { LayoutDashboard, Users, MessageSquare, Bell, LogOut, Menu, User, ChevronDown, Notebook } from 'lucide-react';
 import { useAuth } from '@/context/authContext';
 import Link from 'next/link';
-import { UsersProvider } from '@/context/UsersContext';
-import { BlockProvider } from '@/context/blockContext';
-import { RoomProvider } from '@/context/roomContext';
 import { useRouter } from 'next/navigation';
+import { UsersProvider } from '@/context/UsersContext';
+import { RoomProvider } from '@/context/roomContext';
+import { BlockProvider } from '@/context/blockContext';
 
 const adminNavItems = [
-    { icon: LayoutDashboard, label: 'Dashboard', href: '/admin' },
-    { icon: Users, label: 'Users', href: '/admin/users' },
-    { icon: Building2, label: 'Blocks', href: '/admin/blocks' },
-    { icon: DollarSign, label: 'Fees', href: '/admin/fees' },
-    { icon: MessageSquare, label: 'Complaints', href: '/admin/complaints' },
-    { icon: Bell, label: 'Alerts', href: '/admin/announcements' },
+    { icon: LayoutDashboard, label: 'Dashboard', href: '/warden' },
+    { icon: Users, label: 'Students', href: '/warden/students' },
+    { icon: Notebook, label: 'Leaves', href: '/warden/leaves' },
+    { icon: MessageSquare, label: 'Complaints', href: '/warden/complaints' },
+    { icon: Bell, label: 'Alerts', href: '/warden/announcements' },
 ];
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function layout({ children }: { children: React.ReactNode }) {
     const { user, logout, isLoading } = useAuth();
     const router = useRouter()
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -39,7 +38,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
     useEffect(() => {
         if (isLoading) return
-        if (user && user?.role !== "admin") return router.push(`/${user.role}`)
+        if (user && user.role !== "warden") {
+            return router.push(`/${user.role}`)
+        }
         if (!user) return router.push("/")
     }, [isLoading, user, router])
 
@@ -61,7 +62,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                             <Menu size={24} />
                         </button>
                         <div className="hidden sm:block">
-                            <h1 className="text-sm font-bold text-slate-400 uppercase tracking-widest leading-none">Admin</h1>
+                            <h1 className="text-sm font-bold text-slate-400 uppercase tracking-widest leading-none">Warden</h1>
                             <p className="text-lg font-bold text-slate-800">HostelGate</p>
                         </div>
                     </div>
@@ -119,11 +120,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
                 <main className="flex-1 p-4 md:p-10">
                     <BlockProvider>
-                        <UsersProvider>
-                            <RoomProvider>
+                        <RoomProvider>
+                            <UsersProvider>
                                 {children}
-                            </RoomProvider>
-                        </UsersProvider>
+                            </UsersProvider>
+                        </RoomProvider>
                     </BlockProvider>
                 </main>
             </div>

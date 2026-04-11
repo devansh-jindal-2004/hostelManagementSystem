@@ -4,6 +4,8 @@ import Block from "@/model/block.model";
 import { verifyToken } from "@/lib/tokens/verifyToken";
 import { createBlockSchema } from "@/lib/validation/block";
 import blockModel from "@/model/block.model";
+import User from "@/model/auth.model";
+import Room from "@/model/room.model";
 
 export async function PUT(
     req: NextRequest,
@@ -36,6 +38,11 @@ export async function PUT(
             );
         }
 
+        const currentBlock = await Block.findById(id);
+        if (!currentBlock) {
+            return NextResponse.json({ message: "Block not found" }, { status: 404 });
+        }
+
         const duplicateCheck = await Block.findOne({
             name: { $regex: new RegExp(`^${validatedData.data.name}$`, "i") },
             _id: { $ne: id } // Ensure we aren't flagging the block we are currently editing
@@ -48,18 +55,35 @@ export async function PUT(
             );
         }
 
+        const oldWardenId = currentBlock.warden?.toString();
+        const newWardenId = validatedData.data.warden;
+
         const updatedBlock = await Block.findByIdAndUpdate(
             id,
             {
                 name: validatedData.data.name,
                 type: validatedData.data.type,
-                warden: validatedData.data.warden,
+                warden: newWardenId,
             },
             { new: true, runValidators: true }
         ).populate("warden", "name");
 
         if (!updatedBlock) {
             return NextResponse.json({ message: "Block not found" }, { status: 404 });
+        }
+
+        if (oldWardenId !== newWardenId) {
+            if (oldWardenId) {
+                await User.findByIdAndUpdate(oldWardenId, {
+                    $set: { hostelBlock: null }
+                });
+            }
+
+            if (newWardenId) {
+                await User.findByIdAndUpdate(newWardenId, {
+                    $set: { hostelBlock: id }
+                });
+            }
         }
 
         return NextResponse.json(
@@ -92,7 +116,7 @@ export async function DELETE(
         const { id } = await ctx.params;
 
         const block = await blockModel.findById(id);
-        
+
         if (!block) {
             return NextResponse.json({ message: "Block not found" }, { status: 404 });
         }
@@ -104,10 +128,20 @@ export async function DELETE(
             );
         }
 
+        const wardenId = block.warden;
+
+        if (wardenId) {
+            await User.findByIdAndUpdate(wardenId, {
+                $set: { hostelBlock: null }
+            });
+        }
+
+        await Room.deleteMany({ block: id });
+
         await blockModel.findByIdAndDelete(id);
 
         return NextResponse.json(
-            { message: "Block deleted successfully" }, 
+            { message: "Block deleted successfully" },
             { status: 200 }
         );
 

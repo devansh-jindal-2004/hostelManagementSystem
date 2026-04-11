@@ -14,7 +14,7 @@ export interface Room {
 interface RoomContextType {
   rooms: Room[];
   loading: boolean;
-  fetchRooms: (blockId: string) => Promise<void>;
+  fetchRooms: (blockId?: string) => Promise<void>;
   createRoom: (room: Room) => Promise<void>;
   updateRoom: (room: Room) => Promise<void>;
   deleteRoom: (roomId: string) => Promise<void>;
@@ -27,12 +27,19 @@ export function RoomProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(false);
 
   // 1. Fetch rooms for a specific block
-  const fetchRooms = async (blockId: string) => {
+  const fetchRooms = async (blockId?: string) => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/admin/room?blockId=${blockId}`);
+      let res;
+      if(blockId){
+        res = await fetch(`/api/admin/room?blockId=${blockId}`);
+      } else {
+        res = await fetch("/api/admin/room")
+      }
       const data = await res.json();
       if (res.ok) {
+        console.log(data.rooms);
+        
         setRooms(data.rooms);
       } else {
         toast.error(data.message || "Failed to load rooms");

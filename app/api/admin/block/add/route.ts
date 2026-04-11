@@ -3,6 +3,7 @@ import { connectToDatabase } from "@/lib/db/db";
 import Block from "@/model/block.model";
 import { verifyToken } from "@/lib/tokens/verifyToken";
 import { createBlockSchema } from "@/lib/validation/block";
+import User from "@/model/auth.model";
 
 export async function POST(req: NextRequest) {
     try {
@@ -31,6 +32,8 @@ export async function POST(req: NextRequest) {
             );
         }
 
+        const { warden } = validatedData.data
+
         // 3. Check for Existing Block Name (Sanitization/Duplicate Check)
         const existingBlock = await Block.findOne({
             name: { $regex: new RegExp(`^${validatedData.data.name}$`, "i") }
@@ -43,13 +46,20 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        console.log(validatedData);
-        
+        const wardenAlreadyAssigned = await Block.findOne({ warden });
+        if (wardenAlreadyAssigned) {
+            return NextResponse.json({ message: "This warden is already assigned to another block" }, { status: 400 });
+        }
+
         // 4. Create Block with Defaults forced to 0
         const newBlock = await Block.create({
             ...validatedData.data,
             totalBeds: 0,
             occupiedBeds: 0,
+        });
+
+        await User.findByIdAndUpdate(warden, {
+            $set: { hostelBlock: newBlock._id }
         });
 
         const populatedBlock = await newBlock.populate("warden", "name");
