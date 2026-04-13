@@ -4,10 +4,15 @@ import { complaintSchema } from "@/lib/validation/complaint";
 import User from "@/model/auth.model";
 import Complaint from "@/model/complain.model";
 import { NextResponse } from "next/server";
+import roomModel from "@/model/room.model";
+import blockModel from "@/model/block.model";
 
 export async function POST(req: Request) {
     try {
         await connectToDatabase();
+
+        const forceRoom = roomModel.modelName;
+        const forceBlock = blockModel.modelName;
 
         const auth = await verifyToken();
         if (!auth || auth.role !== "student") {
@@ -19,8 +24,15 @@ export async function POST(req: Request) {
 
         if (!validatedResult.success) {
             const errors = validatedResult.error.flatten().fieldErrors;
-            const errorMessage = Object.values(errors).flat().join(". ");
-            return NextResponse.json({ message: errorMessage }, { status: 400 });
+
+            const errorMessage = Object.values(errors)
+                .flat()
+                .join(". ");
+
+            return NextResponse.json(
+                { message: errorMessage },
+                { status: 400 }
+            );
         }
 
         const studentProfile = await User.findById(auth._id).select("roomNumber hostelBlock");
